@@ -1,0 +1,14 @@
+/backup
+/bin
+/.settings
+/doc
+.log
+/.git
+/proto/
+/client_config
+/client_config.zip
+/*.hy
+/build
+/config
+/gameConfig.property
+/jarFile

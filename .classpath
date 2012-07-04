@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="jarFile/commons-daemon-1.0.10.jar"/>
+	<classpathentry kind="lib" path="jarFile/commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="jarFile/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="jarFile/logback-classic-1.0.1.jar"/>
+	<classpathentry kind="lib" path="jarFile/logback-core-1.0.1.jar"/>
+	<classpathentry kind="lib" path="jarFile/slf4j-api-1.6.4.jar"/>
+	<classpathentry kind="lib" path="jarFile/guava-11.0.2.jar"/>
+	<classpathentry kind="lib" path="jarFile/mysql-connector-java-5.1.18-bin.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

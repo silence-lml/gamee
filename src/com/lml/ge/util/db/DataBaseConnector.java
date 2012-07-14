@@ -1,4 +1,4 @@
-package com.lml.ge.helper.dbHelper;
+package com.lml.ge.util.db;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -52,7 +52,7 @@ public class DataBaseConnector {
 //		}
 //	}
 
-	private GenericObjectPool<?> connectionPool;
+	private GenericObjectPool connectionPool;
 	private static final int CONNECTION_POOL_SIZE = 30;
 	private static final int CONNECTION_POOL_ABANDON_TIMEOUT = 10;
 	private static final String VALIDATION_QUERY_STRING = "select 1";
@@ -64,7 +64,6 @@ public class DataBaseConnector {
 		System.out.println("database init single pool end ...");
     }
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void init(String poolName, String urlStr, String userVal, String passwordVal) throws Throwable {
 		logger.debug("dbInit urlStr is {}, userVal is {}, pwdVal is {}", new Object [] {urlStr, userVal, passwordVal});
 		

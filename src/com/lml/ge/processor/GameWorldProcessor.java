@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -20,11 +21,12 @@ public class GameWorldProcessor {
 		return new GameWorldProcessor();
 	}
 	
-	public static ExecutorService dbExec;
-	public static ExecutorService[] gameExec;
+	public static ExecutorService dbWorkers;
+	public static ExecutorService [] gameWorkers;
+	public static ScheduledExecutorService refresherWorkers; 
 	
-	public void initThreadPool() {
-		dbExec = new ThreadPoolExecutor(GameInfo.GAME_THREAD_COUNT, GameInfo.GAME_THREAD_COUNT, 0, TimeUnit.SECONDS,
+	public void initWorkers() {
+		dbWorkers = new ThreadPoolExecutor(GameInfo.GAME_THREAD_COUNT, GameInfo.GAME_THREAD_COUNT, 0, TimeUnit.SECONDS,
 				new LinkedTransferQueue<Runnable>(), new ThreadFactory() {
 					private AtomicInteger counter = new AtomicInteger();
 					@Override
@@ -32,9 +34,9 @@ public class GameWorldProcessor {
 						return new Thread(r, "dbWorker#" + counter.incrementAndGet());
 					}
 				}, new ThreadPoolExecutor.CallerRunsPolicy());
-		gameExec = new ExecutorService [GameInfo.GAME_THREAD_COUNT];
+		gameWorkers = new ExecutorService [GameInfo.GAME_THREAD_COUNT];
 		for(int index = 0; index < GameInfo.GAME_THREAD_COUNT; index ++) {
-			gameExec [index] = Executors.newSingleThreadExecutor(new ThreadFactory() {
+			gameWorkers [index] = Executors.newSingleThreadExecutor(new ThreadFactory() {
 				private AtomicInteger counter = new AtomicInteger();
 				@Override
 				public Thread newThread(Runnable r) {
@@ -42,25 +44,32 @@ public class GameWorldProcessor {
 				}
 			});
 		}
+		refresherWorkers = Executors.newScheduledThreadPool(4, new ThreadFactory() {
+			private AtomicInteger counter = new AtomicInteger();
+			@Override
+			public Thread newThread(Runnable r) {
+				return new Thread(r, "refresher#" + counter.incrementAndGet());
+			};
+		});
 	}
 	
 	public void execDBTask(Runnable dbTask) {
-		dbExec.execute(dbTask);
+		dbWorkers.execute(dbTask);
 	}
 	
 	public <V> void execDBTask(Callable<V> dbTask) {
-		dbExec.execute(new FutureTask<V>(dbTask));
+		dbWorkers.execute(new FutureTask<V>(dbTask));
 	}
 	
-	public Executor getGameExecutor(int id) {
+	public Executor getGameWorker(int id) {
 		int index = id % GameInfo.GAME_THREAD_COUNT;
-		return gameExec[index];
+		return gameWorkers[index];
 	}
 	
 	public void shutdown() {
-		for (ExecutorService exec : gameExec) {
+		for (ExecutorService exec : gameWorkers) {
 			exec.shutdown();
 		}
-		dbExec.shutdown();
+		dbWorkers.shutdown();
 	}
 }

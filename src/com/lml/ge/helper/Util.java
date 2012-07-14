@@ -1,8 +1,11 @@
 package com.lml.ge.helper;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Helper {
+public class Util {
 
 	public static void setFieldValue(Field field, String value) throws NumberFormatException, IllegalArgumentException, IllegalAccessException {
 		Class<?> clazz = field.getType();
@@ -21,6 +24,27 @@ public class Helper {
 		} else {
 			field.set(null, value);
 		}
+	}
+
+	public static Map<String, Field> getFieldMap(Class<?> clazz) {
+		Map<String, Field> fieldMap = new HashMap<>();
+		
+		Class<?> superClazz = clazz.getSuperclass();
+		if(superClazz != null && superClazz != Object.class) {
+			fieldMap.putAll(getFieldMap(superClazz));
+		}
+		
+		if(clazz == Object.class) {
+			return fieldMap;
+		}
+		
+		for(Field field : clazz.getDeclaredFields()) {
+			if(!Modifier.isStatic(field.getModifiers())) {
+				fieldMap.put(field.getName(), field);
+				System.out.println(field.getName());
+			}
+		}
+		return fieldMap;
 	}
 
 }

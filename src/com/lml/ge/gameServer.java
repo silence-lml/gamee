@@ -4,11 +4,11 @@ import org.apache.commons.daemon.Daemon;
 import org.apache.commons.daemon.DaemonContext;
 import org.apache.commons.daemon.DaemonInitException;
 
-import com.lml.ge.helper.configHelper.ConfigHelper;
-import com.lml.ge.helper.dbHelper.DataBaseConnector;
-import com.lml.ge.helper.redisHelper.RedisConnector;
-import com.lml.ge.helper.scheduleHelper.ScheduleHelper;
 import com.lml.ge.processor.GameWorldProcessor;
+import com.lml.ge.util.config.ConfigUtil;
+import com.lml.ge.util.db.DataBaseConnector;
+import com.lml.ge.util.redis.RedisConnector;
+import com.lml.ge.util.scheduler.ScheduleUtil;
 
 public class gameServer implements Daemon {
 	private static String [] inputArgs;
@@ -60,7 +60,7 @@ public class gameServer implements Daemon {
 	 * 启动线程池
 	 */
 	private static void initThreadPool() {
-		GameWorldProcessor.getWorldProcessor().initThreadPool();
+		GameWorldProcessor.getWorldProcessor().initWorkers();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class gameServer implements Daemon {
 	 * @throws Throwable
 	 */
 	private static void initConfigs() throws Throwable {
-		ConfigHelper.getConfigs().init();
+		ConfigUtil.getConfigs().init();
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class gameServer implements Daemon {
 	 * 启动所有刷新任务
 	 */
 	private static void initScheduledTask() {
-		ScheduleHelper.getScheduleHelper().init();
+		ScheduleUtil.getScheduleHelper().init();
 	}
 
 	/**

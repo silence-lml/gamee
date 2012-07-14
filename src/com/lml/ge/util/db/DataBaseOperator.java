@@ -1,4 +1,4 @@
-package com.lml.ge.helper.dbHelper;
+package com.lml.ge.util.db;
 
 public class DataBaseOperator {
 	

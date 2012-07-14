@@ -1,4 +1,4 @@
-package com.lml.ge.helper.scheduleHelper;
+package com.lml.ge.util.scheduler;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.lml.ge.helper.GameInfo;
 
-public class ScheduleHelper {
+public class ScheduleUtil {
 	private final ScheduledExecutorService scheduleExec;
-	private ScheduleHelper() {
+	private ScheduleUtil() {
 		scheduleExec = Executors.newScheduledThreadPool(GameInfo.GAME_THREAD_COUNT + 1, new ThreadFactory() {
 			private AtomicInteger counter = new AtomicInteger();
 			@Override
@@ -19,8 +19,8 @@ public class ScheduleHelper {
 		});
 	}
 	
-	public static ScheduleHelper getScheduleHelper() {
-		return new ScheduleHelper();
+	public static ScheduleUtil getScheduleHelper() {
+		return new ScheduleUtil();
 	}
 	
 	public static void init() {

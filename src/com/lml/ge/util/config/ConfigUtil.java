@@ -1,12 +1,12 @@
-package com.lml.ge.helper.configHelper;
+package com.lml.ge.util.config;
 
 import com.lml.ge.helper.PropsHelper;
 
-public class ConfigHelper {
-	private ConfigHelper() {}
+public class ConfigUtil {
+	private ConfigUtil() {}
 	
-	public static ConfigHelper getConfigs() {
-		return new ConfigHelper();
+	public static ConfigUtil getConfigs() {
+		return new ConfigUtil();
 	}
 
 	public void init() throws Throwable {

@@ -37,7 +37,7 @@ public class PropsHelper {
 				try {
 					Field field = GameInfo.class.getDeclaredField(key);
 					String value = entry.getValue().toString();
-					Helper.setFieldValue(field, value);
+					Util.setFieldValue(field, value);
 					logger.debug("field name is {}, value is {}", field.getName(), value);
 				} catch (NoSuchFieldException e) {
 					e.printStackTrace();

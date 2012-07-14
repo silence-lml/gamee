@@ -1,4 +1,4 @@
-package com.lml.ge.helper.redisHelper;
+package com.lml.ge.util.redis;
 
 public class RedisConnector {
 	private RedisConnector() {}

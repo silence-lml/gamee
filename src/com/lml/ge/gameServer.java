@@ -5,6 +5,7 @@ import org.apache.commons.daemon.DaemonContext;
 import org.apache.commons.daemon.DaemonInitException;
 
 import com.lml.ge.processor.GameWorldProcessor;
+import com.lml.ge.processor.ServerProcessor;
 import com.lml.ge.util.config.ConfigUtil;
 import com.lml.ge.util.db.DataBaseConnector;
 import com.lml.ge.util.redis.RedisConnector;
@@ -14,7 +15,7 @@ public class gameServer implements Daemon {
 	private static String [] inputArgs;
 	public static void main(String[] args) {
 		inputArgs = args;
-		gameStart();
+		startGame();
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class gameServer implements Daemon {
 	@Override
 	public void start() throws Exception {
 		if(inputArgs == null || inputArgs.length == 0) {
-			gameStart();
+			startGame();
 		} else {
 			
 		}
@@ -33,19 +34,19 @@ public class gameServer implements Daemon {
 
 	@Override
 	public void stop() throws Exception {
-		gameEnd();
+		endGame();
 	}
 	
 	@Override
 	public void destroy() {}
 
-	private static void gameEnd() {
+	private static void endGame() {
 		
 	}
 	
-	private static void gameStart() {
+	private static void startGame() {
 		try {
-			initThreadPool();
+			initWorkers();
 			initConnectionPools();
 			initConfigs();
 			initGameData();
@@ -56,48 +57,30 @@ public class gameServer implements Daemon {
 			System.exit(0);
 		}
 	}
-	/**
-	 * 启动线程池
-	 */
-	private static void initThreadPool() {
+
+	private static void initWorkers() {
 		GameWorldProcessor.getWorldProcessor().initWorkers();
 	}
 
-	/**
-	 * 游戏配置
-	 * @throws Throwable
-	 */
 	private static void initConfigs() throws Throwable {
-		ConfigUtil.getConfigs().init();
+		ConfigUtil.getConfigUtil().init();
 	}
 
-	/**
-	 * 初始化DB
-	 * @throws Throwable
-	 */
 	private static void initConnectionPools() throws Throwable {
-		DataBaseConnector.getDBHelper().init();
-		RedisConnector.getRedisHelper().init();
+		DataBaseConnector.getDBUtil().init();
+		RedisConnector.getRedisUtil().init();
 	}
 
-	/**
-	 * 初始化游戏数据
-	 */
 	private static void initGameData() {
 		
 	}
 
-	/**
-	 * 启动所有刷新任务
-	 */
 	private static void initScheduledTask() {
-		ScheduleUtil.getScheduleHelper().init();
+		ScheduleUtil.getScheduleUtil().init();
 	}
 
-	/**
-	 * 启动服务器各种监听
-	 */
 	private static void initServer() {
-		
+		ServerProcessor.initMainServer();
+		ServerProcessor.initManageServer();
 	}
 }

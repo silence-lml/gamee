@@ -17,14 +17,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
-import com.lml.ge.helper.GameInfo;
+import com.lml.ge.util.GameInfo;
 
 public class DataBaseConnector {
 	private static final Logger logger = LoggerFactory.getLogger(DataBaseConnector.class);
 	
 	private DataBaseConnector() {}
 	
-	public static DataBaseConnector getDBHelper() {
+	public static DataBaseConnector getDBUtil() {
 		return new DataBaseConnector();
 	}
 
@@ -111,6 +111,6 @@ public class DataBaseConnector {
     }
     
     public static void closePool() {
-    	getDBHelper().closeConnectionPool();
+    	getDBUtil().closeConnectionPool();
     }
 }

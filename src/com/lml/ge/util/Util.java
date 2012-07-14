@@ -1,4 +1,4 @@
-package com.lml.ge.helper;
+package com.lml.ge.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -7,7 +7,10 @@ import java.util.Map;
 
 public class Util {
 
-	public static void setFieldValue(Field field, String value) throws NumberFormatException, IllegalArgumentException, IllegalAccessException {
+	public static void setFieldValue(Field field, String value) throws NullPointerException, NumberFormatException, IllegalArgumentException, IllegalAccessException {
+		if(value == null) {
+			throw new NullPointerException("value is null");
+		}
 		Class<?> clazz = field.getType();
 		if (byte.class == clazz) {
 			field.setByte(null, Byte.parseByte(value));
@@ -27,7 +30,7 @@ public class Util {
 	}
 
 	public static Map<String, Field> getFieldMap(Class<?> clazz) {
-		Map<String, Field> fieldMap = new HashMap<>();
+		Map<String, Field> fieldMap = new HashMap<String, Field>();
 		
 		Class<?> superClazz = clazz.getSuperclass();
 		if(superClazz != null && superClazz != Object.class) {

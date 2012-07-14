@@ -4,13 +4,11 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
 
-import lombok.Data;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 
-import com.lml.ge.helper.Util;
+import com.lml.ge.util.StringEncoder;
+import com.lml.ge.util.Util;
 
-@Data
 public abstract class GameObject {
 	public static final Map<String, Field> fieldMap = Util.getFieldMap(GameObject.class);
 	
@@ -68,5 +66,29 @@ public abstract class GameObject {
 		return builder.toString();
 	}
 	
-	abstract protected void setAttirbute(String fieldName, String value);
+	protected boolean setAttirbute(String fieldName, String value){
+		Field field = fieldMap.get(fieldName);
+		try {
+			if(field == null) {
+				throw new NoSuchFieldException("不存在field:" + fieldName);
+			}
+			
+			Util.setFieldValue(field, value);
+			if("name".equals(fieldName)) {
+				this.nameBytes = StringEncoder.encode(value);
+			}
+			return true;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

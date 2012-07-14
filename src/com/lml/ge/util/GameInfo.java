@@ -1,20 +1,20 @@
-package com.lml.ge.helper;
+package com.lml.ge.util;
 
 public class GameInfo {
 	/** 
-	 * Êý¾Ý¿âURL(db_ip:db_port/db_name) 
+	 * ï¿½ï¿½Ý¿ï¿½URL(db_ip:db_port/db_name) 
 	 */
 	public static String DB_URL = "localhost:3306/ge";
 	/** 
-	 * Êý¾Ý¿âÓÃ»§Ãû 
+	 * ï¿½ï¿½Ý¿ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ 
 	 * */
 	public static String DB_USR = "root";
 	/** 
-	 * Êý¾Ý¿âÃÜÂë 
+	 * ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	 */
 	public static String DB_PWD = "123";
 	/**
-	 * CPU¸öÊý
+	 * CPUï¿½ï¿½ï¿½ï¿½
 	 */
 	public static final int GAME_THREAD_COUNT = Runtime.getRuntime().availableProcessors();
 	

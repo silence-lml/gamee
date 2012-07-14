@@ -1,11 +1,11 @@
 package com.lml.ge.util.config;
 
-import com.lml.ge.helper.PropsHelper;
+import com.lml.ge.util.PropsHelper;
 
 public class ConfigUtil {
 	private ConfigUtil() {}
 	
-	public static ConfigUtil getConfigs() {
+	public static ConfigUtil getConfigUtil() {
 		return new ConfigUtil();
 	}
 

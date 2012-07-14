@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.lml.ge.helper.GameInfo;
+import com.lml.ge.util.GameInfo;
 
 public class GameWorldProcessor {
 	private GameWorldProcessor() {}
